@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Snake Game</title>
+    <link rel="stylesheet" href="snake.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div style="position: fixed;top: 10%;left:20%;color:#f3f3f3;">
+            <h3 id="score">Score : 0</h3>
+        </div>
+        <div class="gamebox">
+            <table id="box">
+
+            </table>
+        </div>
+        <div style="position: fixed;top: 10%;right:10%;color:#f3f3f3;">
+            <h3 id="H-score">Highest Score : 0</h3>
+        </div>
+    </div>
+
+
+    <script src="jquery.min.js"></script>
+    <script>
+        let box = 20;
+        let food = {
+            x: 4,
+            y: 6
+        };
+        let speed = 10;
+        let lastframe = 0;
+        let snake = Array({
+            x: 11,
+            y: 10
+        });
+        let dir = {
+            x: 0,
+            y: 0
+        };
+        let score = 0;
+        let Hscore = 0;
+        var keyclick = new Audio("./sound/click.wav");
+        var music = new Audio("./sound/music.mp3");
+        var gameover = new Audio("./sound/game-over.wav");
+        var foodsound = new Audio("./sound/food.wav");
+
+        function createBox(boxes) {
+            for (let i = 1; i <= boxes; i++) {
+                $("#box").append("<tr class='row' id='" + i + "'></tr>");
+                for (let j = 1; j <= boxes; j++) {
+                    $("#" + i).append("<td id='" + i + "-" + j + "'></td>");
+                }
+            }
+        }
+        createBox(box);
+
+        function main(cframe) {
+            frame = requestAnimationFrame(main)
+            // console.log(cframe);
+            if ((cframe - lastframe) / 1000 < 1 / speed) {
+                return;
+            }
+            lastframe = cframe;
+            gameEngine();
+        }
+
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function isCollapse(snakearr) {
+            for (let j = 1; j < snake.length; j++) {
+                if (snakearr[j].x === snakearr[0].x && snakearr[j].y === snakearr[0].y) {
+                    return true;
+                }
+            }
+
+            if (snake[0].x > 20 || snake[0].x < 1 || snake[0].y < 1 || snake[0].y > 20) {
+                return true;
+            }
+        }
+
+        function gameEngine() {
+            // console.log("X : "+snake[0].x+" Y : "+snake[0].y);
+            music.play();
+            music.volume = 0.5;
+            // Updateing Snake and Food
+            if (localStorage.getItem("HighScore") == null) {
+                localStorage.setItem("HighScore", Hscore);
+            }
+            if (isCollapse(snake)) {
+                gameover.play();
+                dir = {
+                    x: 0,
+                    y: 0
+                };
+                snake = [{
+                    x: 11,
+                    y: 10
+                }];
+                cancelAnimationFrame(frame);
+                if (score > localStorage.getItem("HighScore")) {
+                    localStorage.setItem("HighScore", score)
+                }
+                score = 0;
+                music.pause();
+            }
+
+
+            if (snake[0].x == food.x && snake[0].y == food.y) {
+                snake.unshift({
+                    x: snake[0].x + dir.x,
+                    y: snake[0].y + dir.y
+                });
+                $("#" + food.x + "-" + food.y).removeClass("food");
+                food = {
+                    x: random(1, box),
+                    y: random(1, box)
+                }
+                score += 10;
+                foodsound.play();
+            }
+
+            for (let i = snake.length - 2; i >= 0; i--) {
+                snake[i + 1] = {
+                    ...snake[i]
+                };
+                $("#" + snake[i + 1].x + "-" + snake[i + 1].y).removeClass("snake-body snake-head");
+            }
+
+            snake[0].x += dir.x;
+            snake[0].y += dir.y;
+            
+            // Placements of Food and Snake 
+            if ($("#box > tr > td").hasClass("snake-body") == true) {
+                $("#box").find(".snake-body").removeClass("snake-body")
+                $("#box").find(".snake-head").removeClass("snake-head");
+            }
+
+            snake.forEach((e, index) => {
+                // console.log(e.y)
+                if (index == 0) {
+                    $("#" + e.x + "-" + e.y).addClass("snake-body snake-head");
+                } else {
+                    $("#" + e.x + "-" + e.y).addClass("snake-body");
+                }
+            });
+            $("#" + food.x + "-" + food.y).addClass("food");
+            $("#score").html("Score : " + score);
+            $("#H-score").html("Highest Score : " + localStorage.getItem("HighScore"));
+        }
+
+
+
+        requestAnimationFrame(main);
+        $(document).keydown(function (event) {
+            dir = {
+                x: 0,
+                y: 0
+            };
+            keyclick.play();
+            // console.log(event.key);
+            switch (event.key) {
+                case 'ArrowUp':
+                    dir.x = -1;
+                    dir.y = 0;
+                    break;
+                case 'ArrowDown':
+                    dir.x = +1;
+                    dir.y = 0;
+                    break;
+                case 'ArrowLeft':
+                    dir.x = 0;
+                    dir.y = -1;
+                    break;
+                case 'ArrowRight':
+                    dir.x = 0;
+                    dir.y = +1;
+                    break;
+                case ' ':
+                    requestAnimationFrame(main);
+                    break;
+                case 'p':
+                    cancelAnimationFrame(frame);
+                    break;
+                default:
+                    break;
+            }
+        })
+    </script>
+</body>
+
+</html>
