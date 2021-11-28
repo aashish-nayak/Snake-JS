@@ -3,6 +3,16 @@
     margin: 0;
     box-sizing: border-box;
 }
+:root {
+    /* Change colors! */
+    --color1: #ff698c;
+    --color2: cyan;
+    --color3: gold;
+    --color4: lime;
+    --color5: orange;
+    --color6: darkgray;
+}
+
 
 body {
     max-height: 100vh;
@@ -122,24 +132,129 @@ a {
     }
 }
 
-/* @keyframes neon {
-    0% {
-        box-shadow: 0px 0px 0px 0px #ff0000;
-    }
+/* Mobile Arrow Keys  */
+#keyboard {
+    margin: 0px;
+    text-align: center;
+    display: none;
+}
 
-    25% {
-        box-shadow: 1px 0px 20px 1px #ff0000;
-    }
+#keyboard button {
+    display: inline-block;
+    font-family: 'Consolas', monospace;
+    font-size: 2em;
+    margin: 0.2em;
+    width: 2em;
+    height: 2em;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.3em;
+    transition: 0.12s ease-out;
+}
 
-    50% {
-        box-shadow: 2px 1px 40px 1px #ff0000;
-    }
+button.up {
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    text-shadow:
+        0 0 0.075em white,
+        0 0 0.1em white,
+        0 0 0.15em var(--color1),
+        0 0 0.25em var(--color1),
+        0 0 0.3em var(--color1),
+        0 0 0.35em var(--color1),
+        0 0 0.4em var(--color1);
+    border: 3px solid white;
+    border-radius: 15%;
+    box-shadow:
+        0 0 0.075em white inset,
+        0 0 0.1em white,
+        0 0 0.15em var(--color1) inset,
+        0 0 0.25em var(--color1),
+        0 0 0.3em var(--color1) inset,
+        0 0 0.35em var(--color1);
+}
 
-    75% {
-        box-shadow: 1px 0px 20px 1px #ff0000;
-    }
+button.left {
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    text-shadow:
+        0 0 0.075em white,
+        0 0 0.1em white,
+        0 0 0.15em var(--color2),
+        0 0 0.25em var(--color2),
+        0 0 0.3em var(--color2),
+        0 0 0.35em var(--color2),
+        0 0 0.4em var(--color2);
+    border: 3px solid white;
+    border-radius: 15%;
+    box-shadow:
+        0 0 0.075em white inset,
+        0 0 0.1em white,
+        0 0 0.15em var(--color2) inset,
+        0 0 0.25em var(--color2),
+        0 0 0.3em var(--color2) inset,
+        0 0 0.35em var(--color2);
+}
 
-    100% {
-        box-shadow: 0px 0px 0px 0px #ff0000;
+button.down {
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    text-shadow:
+        0 0 0.075em white,
+        0 0 0.1em white,
+        0 0 0.15em var(--color3),
+        0 0 0.25em var(--color3),
+        0 0 0.3em var(--color3),
+        0 0 0.35em var(--color3),
+        0 0 0.4em var(--color3);
+    border: 3px solid white;
+    border-radius: 15%;
+    box-shadow:
+        0 0 0.075em white inset,
+        0 0 0.1em white,
+        0 0 0.15em var(--color3) inset,
+        0 0 0.25em var(--color3),
+        0 0 0.3em var(--color3) inset,
+        0 0 0.35em var(--color3);
+}
+
+button.right {
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    text-shadow:
+        0 0 0.075em white,
+        0 0 0.1em white,
+        0 0 0.15em var(--color4),
+        0 0 0.25em var(--color4),
+        0 0 0.3em var(--color4),
+        0 0 0.35em var(--color4),
+        0 0 0.4em var(--color4);
+    border: 3px solid white;
+    border-radius: 15%;
+    box-shadow:
+        0 0 0.075em white inset,
+        0 0 0.1em white,
+        0 0 0.15em var(--color4) inset,
+        0 0 0.25em var(--color4),
+        0 0 0.3em var(--color4) inset,
+        0 0 0.35em var(--color4);
+}
+
+button:active {
+    transform: translate(0, 3px);
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow:
+        0 0 0.075em white inset,
+        0 0 0.1em white,
+        0 0 0.15em white inset,
+        0 0 0.25em white;
+}
+
+@media (max-width: 600px) {
+    .gamebox {
+        margin-top:20%;
     }
-} */
+    #keyboard{
+        display: block;
+    }
+}
