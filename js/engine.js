@@ -70,7 +70,7 @@ function isCollapse(snakearr) {
 
 function gameEngine() {
   // console.log("X : "+snake[0].x+" Y : "+snake[0].y);
-  // music.play();
+  music.play();
   music.volume = 0.5;
   // Updateing Snake and Food
   if (localStorage.getItem("HighScore") == null) {
