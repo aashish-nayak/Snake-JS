@@ -70,7 +70,7 @@ function isCollapse(snakearr) {
 
 function gameEngine() {
   // console.log("X : "+snake[0].x+" Y : "+snake[0].y);
-  music.play();
+  // music.play();
   music.volume = 0.5;
   // Updateing Snake and Food
   if (localStorage.getItem("HighScore") == null) {
@@ -123,6 +123,7 @@ function gameEngine() {
     };
     score += 10;
     foodsound.play();
+    foodsound.currentTime = 0;
   }
 
   for (let i = snake.length - 2; i >= 0; i--) {
@@ -165,10 +166,15 @@ function keylogger(event) {
     y: 0,
   };
   keyclick.play();
+  keyclick.currentTime = 0;
   if(event===38){
     if (snakedir != "sdown") {
       snakedir = "sup";
       dir.x = -1;
+      dir.y = 0;
+    }else{
+      snakedir = "sdown";
+      dir.x = +1;
       dir.y = 0;
     }
   }
@@ -178,6 +184,10 @@ function keylogger(event) {
       snakedir = "sdown";
       dir.x = +1;
       dir.y = 0;
+    }else{
+      snakedir = "sup";
+      dir.x = -1;
+      dir.y = 0;
     }
   }
   
@@ -186,6 +196,10 @@ function keylogger(event) {
       snakedir = "sleft";
       dir.x = 0;
       dir.y = -1;
+    }else{
+      snakedir = "sright";
+      dir.x = 0;
+      dir.y = +1;
     }
   }
   
@@ -194,6 +208,10 @@ function keylogger(event) {
       snakedir = "sright";
       dir.x = 0;
       dir.y = +1;
+    }else{
+      snakedir = "sleft";
+      dir.x = 0;
+      dir.y = -1;
     }
   }
   
@@ -205,11 +223,21 @@ function keylogger(event) {
         dir.x = -1;
         dir.y = 0;
         break;
+      }else{
+        snakedir = "sdown";
+        dir.x = +1;
+        dir.y = 0;
+        break;
       }
     case "ArrowDown":
       if (snakedir != "sup") {
         snakedir = "sdown";
         dir.x = +1;
+        dir.y = 0;
+        break;
+      }else{
+        snakedir = "sup";
+        dir.x = -1;
         dir.y = 0;
         break;
       }
@@ -219,12 +247,22 @@ function keylogger(event) {
         dir.x = 0;
         dir.y = -1;
         break;
+      }else{
+        snakedir = "sright";
+        dir.x = 0;
+        dir.y = +1;
+        break;
       }
     case "ArrowRight":
       if (snakedir != "sleft") {
         snakedir = "sright";
         dir.x = 0;
         dir.y = +1;
+        break;
+      }else{
+        snakedir = "sleft";
+        dir.x = 0;
+        dir.y = -1;
         break;
       }
     case " ":
